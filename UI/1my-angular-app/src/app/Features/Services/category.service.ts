@@ -22,4 +22,14 @@ export class CategoryService {
 
     return this.http.get<GetCategoryResponceModel[]>(`${environment.apiBaseUrl}/GenericCategory`);
   }
+
+  getCategoryById(id:number):Observable<GetCategoryResponceModel>{
+    // also use like this return this.http.get<GetCategoryResponceModel>(`${environment.apiBaseUrl}/GenericCategory/${id}`);
+    return this.http.get<GetCategoryResponceModel>(`${environment.apiBaseUrl}/GenericCategory` + `/${id}`);
+  }
+
+  UpdateCategory(id:number,model:AddCategoryRequestModel):Observable<void>{
+    // also use like this return this.http.get<GetCategoryResponceModel>(`${environment.apiBaseUrl}/GenericCategory/${id}`);
+    return this.http.put<void>(`${environment.apiBaseUrl}/GenericCategory` + `/${id}`,model);
+  }
 }
