@@ -32,4 +32,9 @@ export class CategoryService {
     // also use like this return this.http.get<GetCategoryResponceModel>(`${environment.apiBaseUrl}/GenericCategory/${id}`);
     return this.http.put<void>(`${environment.apiBaseUrl}/GenericCategory` + `/${id}`,model);
   }
+
+  DeleteCategory(id:number):Observable<void>{
+    // also use like this return this.http.get<GetCategoryResponceModel>(`${environment.apiBaseUrl}/GenericCategory/${id}`);
+    return this.http.delete<void>(`${environment.apiBaseUrl}/GenericCategory` + `/${id}`);
+  }
 }
