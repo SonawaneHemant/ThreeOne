@@ -4,3 +4,29 @@
         <!-- routerlink to directly call the add-category component path -->
         <a [routerLink]="['/admin/blogposts/add']" class="btn btn-primary">Add Blog Post</a>
     </div>
+
+    <ng-container *ngIf="getBlogPostList$ | async as blogposts">
+        <table class="table table-bordered table-striped mt-3">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Short Description</th>
+                    <th>Content</th>
+                    <th>Is Visible</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let blogpost of blogposts">
+                    <td>{{ blogpost.title }}</td>
+                    <td>{{ blogpost.shortDescription }}</td>
+                    <td>{{ blogpost.content }}</td>
+                    <td>{{ blogpost.isVisible }}</td>
+                    <td>
+                        <a [routerLink]="['/admin/blogposts/edit', blogpost.id]" class="btn btn-sm btn-warning me-2">Edit</a>
+                        <!-- <button class="btn btn-sm btn-danger">Delete</button> -->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </ng-container>
+</div>

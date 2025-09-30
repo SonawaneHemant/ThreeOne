@@ -4,10 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { BlogPostServiceService } from '../BlogPost-Services/blog-post.service.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { MarkdownModule } from 'ngx-markdown';
+
 
 @Component({
   selector: 'app-add-blogpost',
-  imports: [FormsModule,CommonModule],
+  standalone: true,
+  imports: [MarkdownModule,FormsModule, CommonModule],
   templateUrl: './add-blogpost.component.html',
   styleUrl: './add-blogpost.component.css'
 })
@@ -16,7 +20,7 @@ export class AddBlogpostComponent implements OnDestroy{
   modelAddBlogPost:AddBlogPostModel;
   private addBlogSubscription? : Subscription;
 
-  constructor(private blogpostService:BlogPostServiceService) {
+  constructor(private blogpostService:BlogPostServiceService,private router:Router) {
     this.modelAddBlogPost = {
       title: '',
       shortDescription: '', 
@@ -25,7 +29,9 @@ export class AddBlogpostComponent implements OnDestroy{
       urlHandel: '',
       publishedDate: new Date(),
       auther: '',
-      isVisible: true
+      isVisible: true,
+      categorysList:[],
+      categoriesIDList:[]
     }
   }
   
@@ -38,6 +44,7 @@ export class AddBlogpostComponent implements OnDestroy{
       next:(resp)=>{
         alert('Blog Post Added Successfully');
         console.log(resp);
+        this.router.navigateByUrl('/admin/blogpost');
       },
       error:(err)=>{
         console.log(err);

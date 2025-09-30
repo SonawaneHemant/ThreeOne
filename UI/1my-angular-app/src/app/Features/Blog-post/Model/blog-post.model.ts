@@ -1,6 +1,7 @@
 import { GetCategoryResponceModel } from "../../Category/Models/get-category-responce.model";
 
-export interface AddBlogPostModel {
+export interface BlogPostModel {
+    id: number;
   title: string;
   shortDescription: string;
   content: string;
@@ -10,5 +11,5 @@ export interface AddBlogPostModel {
   auther: string;
   isVisible: boolean;
   categorysList:GetCategoryResponceModel[];
-    categoriesIDList:number[];
+  categoriesIDList:number[];
 }
