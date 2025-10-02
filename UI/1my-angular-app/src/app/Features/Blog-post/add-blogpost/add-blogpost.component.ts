@@ -1,11 +1,13 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AddBlogPostModel } from '../Model/add-blog-post.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { BlogPostServiceService } from '../BlogPost-Services/blog-post.service.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
+import { CategoryService } from '../../Services/category.service';
+import { GetCategoryResponceModel } from '../../Category/Models/get-category-responce.model';
 
 
 @Component({
@@ -15,12 +17,13 @@ import { MarkdownModule } from 'ngx-markdown';
   templateUrl: './add-blogpost.component.html',
   styleUrl: './add-blogpost.component.css'
 })
-export class AddBlogpostComponent implements OnDestroy{
+export class AddBlogpostComponent implements OnInit,OnDestroy{
 
   modelAddBlogPost:AddBlogPostModel;
   private addBlogSubscription? : Subscription;
+  categoriesList$?:Observable<GetCategoryResponceModel[]>;
 
-  constructor(private blogpostService:BlogPostServiceService,private router:Router) {
+  constructor(private blogpostService:BlogPostServiceService,private router:Router,private categoryService:CategoryService) {
     this.modelAddBlogPost = {
       title: '',
       shortDescription: '', 
@@ -33,6 +36,9 @@ export class AddBlogpostComponent implements OnDestroy{
       categorysList:[],
       categoriesIDList:[]
     }
+  }
+  ngOnInit(): void {
+    this.categoriesList$= this.categoryService.getAllCategory();
   }
   
 

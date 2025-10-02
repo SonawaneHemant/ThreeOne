@@ -22,4 +22,23 @@ export class BlogPostServiceService {
   }
 
 
+  getBlogPostById(id: number): Observable<BlogPostModel> {
+    // also use like this return this.http.get<GetCategoryResponceModel>(`${environment.apiBaseUrl}/GenericCategory/${id}`);
+    return this.http.get<BlogPostModel>(`${environment.apiBaseUrl}/GenericBlogPost` + `/${id}`);
+  }
+
+  GetALLblogpostAny(): Observable<any[]> {
+    console.log("Blog post data fetched");
+    return this.http.get<any[]>(`${environment.apiBaseUrl}/GenericBlogPost`).pipe();
+  }
+
+  Updateblogpost(id: number, model: AddBlogPostModel): Observable<void> {
+    // also use like this return this.http.get<GetCategoryResponceModel>(`${environment.apiBaseUrl}/GenericCategory/${id}`);
+    return this.http.put<void>(`${environment.apiBaseUrl}/GenericBlogPost` + `/${id}`, model);
+  }
+
+  Deleteblogpost(id: number): Observable<void> {
+    // also use like this return this.http.get<GetCategoryResponceModel>(`${environment.apiBaseUrl}/GenericCategory/${id}`);
+    return this.http.delete<void>(`${environment.apiBaseUrl}/GenericBlogPost` + `/${id}`);
+  }
 }

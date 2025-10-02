@@ -6,6 +6,7 @@ import { Routes } from '@angular/router';
 import { EditCategoryComponent } from './Features/Category/edit-category/edit-category.component';
 import { BlogpostListComponent } from './Features/Blog-post/blogpost-list/blogpost-list.component';
 import {AddBlogpostComponent } from './Features/Blog-post/add-blogpost/add-blogpost.component';
+import {EditBlogpostComponent} from './Features/Blog-post/edit-blogpost/edit-blogpost.component'
 
 export const routes: Routes = [
  { path: 'home', loadComponent: () => import('./home/home.component').then(m => m.HomeComponent) },
@@ -15,4 +16,5 @@ export const routes: Routes = [
    { path: 'admin/categories/edit/:id', component: EditCategoryComponent},
    { path: 'admin/blogpost', component: BlogpostListComponent},
    { path: 'admin/blogposts/add', component: AddBlogpostComponent},
+   { path: 'admin/blogposts/edit/:id', component: EditBlogpostComponent},
 ];

@@ -1,0 +1,118 @@
+<div class="container">
+    <h2 class="mt-3">Edit BlogPost</h2>
+
+    <ng-container *ngIf="modelAddBlogPost;else notfound">
+        <!-- (ngSubmit)="onSubmit()" #editCategoryForm="ngForm" -->
+        <form #form="ngForm" (ngSubmit)="onEditFormSubmit(form)">
+            <div class="mt-2">
+
+                <!-- Blogpost Id (readonly) -->
+                <div class="mt-3">
+                    <label for="blogpostId" class="form-label">Blogpost Id</label>
+                    <input type="text" id="blogpostId" class="form-control" value="{{ modelAddBlogPost.id }}"
+                        disabled />
+                </div>
+
+                <!-- Title -->
+                <div class="mt-3">
+                    <label for="blogpostTitle" class="form-label">Blogpost Title</label>
+                    <input type="text" id="blogpostTitle" class="form-control" name="title"
+                        [(ngModel)]="modelAddBlogPost.title" />
+                </div>
+
+                <!-- Short Description -->
+                <div class="mt-3">
+                    <label for="shortDescription" class="form-label">Short Description</label>
+                    <textarea id="shortDescription" class="form-control" name="shortDescription" rows="3"
+                        [(ngModel)]="modelAddBlogPost.shortDescription"></textarea>
+                </div>
+
+                <!-- Content with Markdown preview -->
+                <div class="mt-3">
+                    <label for="content" class="form-label">Content</label>
+                    <div class="d-flex flex-row">
+                        <div class="col-6 p-2">
+                            <textarea id="content" class="form-control" name="content" rows="10" style="height: 350px"
+                                [(ngModel)]="modelAddBlogPost.content"></textarea>
+                        </div>
+                        <div class="col-6 p-2" style="max-height: 350px; overflow-y: auto;">
+                            <markdown [data]="modelAddBlogPost.content"></markdown>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Featured Image URL -->
+                <div class="mt-3">
+                    <label for="featuredImageUrl" class="form-label">Featured Image URL</label>
+                    <input type="text" id="featuredImageUrl" class="form-control" name="featuredImageUrl"
+                        [(ngModel)]="modelAddBlogPost.featuredImageUrl" />
+                    <div *ngIf="modelAddBlogPost.featuredImageUrl">
+                        <img [src]="modelAddBlogPost.featuredImageUrl" alt="Featured" class="img-fluid mt-2" />
+                    </div>
+                </div>
+
+                <!-- URL Handle -->
+                <div class="mt-3">
+                    <label for="urlHandel" class="form-label">URL Handle</label>
+                    <input type="text" id="urlHandel" class="form-control" name="urlHandel"
+                        [(ngModel)]="modelAddBlogPost.urlHandel" />
+                </div>
+
+                <!-- Published Date -->
+                <div class="mt-3">
+                    <label for="publishedDate" class="form-label">Published Date</label>
+                    <input type="date" id="publishedDate" class="form-control" name="publishedDate"
+                        [ngModel]="modelAddBlogPost.publishedDate | date:'yyyy-MM-dd'"
+                        (ngModelChange)="modelAddBlogPost.publishedDate = $event" />
+                </div>
+
+                <!-- Author -->
+                <div class="mt-3">
+                    <label for="auther" class="form-label">Author</label>
+                    <input type="text" id="auther" class="form-control" name="auther"
+                        [(ngModel)]="modelAddBlogPost.auther" />
+                </div>
+
+                <!-- Is Visible -->
+                <div class="mt-3 form-check">
+                    <input type="checkbox" id="isVisible" class="form-check-input" name="isVisible"
+                        [(ngModel)]="modelAddBlogPost.isVisible" />
+                    <label for="isVisible" class="form-check-label">Visible</label>
+                </div>
+
+                <!-- Categories (Multi-Select Dropdown) -->
+                <div class="mt-3">
+                    <label for="categories" class="form-label">Categories</label>
+                    <ng-container *ngIf="categoriesList$ | async as categoriesList">
+                        <select id="categories" class="form-select" name="categoriesIDList" multiple
+                            [(ngModel)]="modelAddBlogPost.categoriesIDList">
+                            <option *ngFor="let category of categoriesList" [ngValue]="category.id">
+                                {{ category.name }}
+                            </option>
+                        </select>
+                    </ng-container>
+                </div>
+
+                <div class="mt-3 d-flex gap-3">
+                    <button type="submit" class="btn btn-primary">
+                        Save Changes
+                    </button>
+
+                    <button type="button" class="btn btn-danger" (click)="onDeleteBlogPostSubmit(form)">
+                        Delete
+                    </button>
+
+                    <a routerLink="/admin/blogpost" class="btn btn-secondary ms-2">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </ng-container>
+
+    <ng-template #notfound>
+        <div class="alert alert-warning" role="alert">
+            Blog Post not found.
+        </div>
+    </ng-template>
+
+
+</div>
