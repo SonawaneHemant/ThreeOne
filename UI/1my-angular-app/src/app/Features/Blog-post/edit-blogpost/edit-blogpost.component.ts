@@ -9,41 +9,44 @@ import { BlogPostModel } from '../Model/blog-post.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MarkdownComponent } from 'ngx-markdown';
+import { ImageSelectorComponent } from "../../../shared/components/image-selector/image-selector.component";
+import { flush } from '@angular/core/testing';
 
 @Component({
   selector: 'app-edit-blogpost',
-  imports: [CommonModule,FormsModule,MarkdownComponent,RouterLink],
+  imports: [CommonModule, FormsModule, MarkdownComponent, RouterLink, ImageSelectorComponent],
   templateUrl: './edit-blogpost.component.html',
   styleUrl: './edit-blogpost.component.css'
 })
 export class EditBlogpostComponent {
 
-   id: number = 0;
-  modelAddBlogPost:BlogPostModel;
-  
+  id: number = 0;
+  modelAddBlogPost: BlogPostModel;
+
   BlogPostUpdateSubscription?: Subscription;
   BlogPostDeleteSubscription?: Subscription;
-  categoriesList$?:Observable<GetCategoryResponceModel[]>;
+  categoriesList$?: Observable<GetCategoryResponceModel[]>;
+  isImageSelectorVisible :boolean=false;
 
-   modeladdBlogSubscription? : Subscription;
+  modeladdBlogSubscription?: Subscription;
 
-  constructor(private blogpostService:BlogPostServiceService,private router: Router,private categoryService:CategoryService,private route: ActivatedRoute) {
+  constructor(private blogpostService: BlogPostServiceService, private router: Router, private categoryService: CategoryService, private route: ActivatedRoute) {
     this.modelAddBlogPost = {
       id: 0,
       title: '',
-      shortDescription: '', 
+      shortDescription: '',
       content: '',
       featuredImageUrl: '',
       urlHandel: '',
       publishedDate: new Date(),
       auther: '',
       isVisible: true,
-      categorysList:[],
-      categoriesIDList:[]
+      categorysList: [],
+      categoriesIDList: []
     }
   }
 
-     ngOnInit(): void {
+  ngOnInit(): void {
     this.modeladdBlogSubscription = this.route.paramMap.subscribe({
       next: (params) => {
         this.id = params.get('id') as unknown as number;
@@ -62,12 +65,13 @@ export class EditBlogpostComponent {
       }
     });
 
-    this.categoriesList$= this.categoryService.getAllCategory();
+    this.categoriesList$ = this.categoryService.getAllCategory();
   }
-  
 
- onEditFormSubmit(form: any) {
-    console.log(form);
+
+  onEditFormSubmit(form: any) {
+    console.log("Blog Post Update start");
+    this.modelAddBlogPost.categorysList = [];
     console.log(this.modelAddBlogPost);
     if (this.id && this.id > 0 && this.modelAddBlogPost) {
       this.BlogPostUpdateSubscription = this.blogpostService.Updateblogpost(this.id, this.modelAddBlogPost).subscribe({
@@ -101,6 +105,18 @@ export class EditBlogpostComponent {
       });
     }
   }
+
+
+  openImageSelector(): void {
+    this.isImageSelectorVisible=true;
+  }
+
+  closeImageSelector(): void {
+    this.isImageSelectorVisible=false;
+  }
+
+
+
 
   ngOnDestroy(): void {
     this.BlogPostUpdateSubscription?.unsubscribe();
