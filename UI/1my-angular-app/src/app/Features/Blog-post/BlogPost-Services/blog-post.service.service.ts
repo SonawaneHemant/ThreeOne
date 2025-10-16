@@ -27,6 +27,11 @@ export class BlogPostServiceService {
     return this.http.get<BlogPostModel>(`${environment.apiBaseUrl}/GenericBlogPost` + `/${id}`);
   }
 
+  getBlogPostByURL_AnyPropery(urlHandel: string): Observable<BlogPostModel> {
+    // also use like this return this.http.get<GetCategoryResponceModel>(`${environment.apiBaseUrl}/GenericCategory/${id}`);
+    return this.http.get<BlogPostModel>(`${environment.apiBaseUrl}/GenericBlogPost/url` + `/${urlHandel}`);
+  }
+
   GetALLblogpostAny(): Observable<any[]> {
     console.log("Blog post data fetched");
     return this.http.get<any[]>(`${environment.apiBaseUrl}/GenericBlogPost`).pipe();

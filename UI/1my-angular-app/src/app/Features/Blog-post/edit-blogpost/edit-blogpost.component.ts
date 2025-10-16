@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { MarkdownComponent } from 'ngx-markdown';
 import { ImageSelectorComponent } from "../../../shared/components/image-selector/image-selector.component";
 import { flush } from '@angular/core/testing';
+import { ImageService } from '../../../shared/components/image-selector/image.service';
 
 @Component({
   selector: 'app-edit-blogpost',
@@ -25,12 +26,14 @@ export class EditBlogpostComponent {
 
   BlogPostUpdateSubscription?: Subscription;
   BlogPostDeleteSubscription?: Subscription;
+  ImageSelectSubscription?: Subscription;
   categoriesList$?: Observable<GetCategoryResponceModel[]>;
   isImageSelectorVisible :boolean=false;
 
   modeladdBlogSubscription?: Subscription;
 
-  constructor(private blogpostService: BlogPostServiceService, private router: Router, private categoryService: CategoryService, private route: ActivatedRoute) {
+  constructor(private blogpostService: BlogPostServiceService, private router: Router, 
+    private categoryService: CategoryService, private route: ActivatedRoute ,private imageService:ImageService) {
     this.modelAddBlogPost = {
       id: 0,
       title: '',
@@ -61,6 +64,19 @@ export class EditBlogpostComponent {
             }
           });
         }
+
+        //this is comming from the image Component
+        this.ImageSelectSubscription=this.imageService.onSelectImage().subscribe({
+          next:responce => {
+            if(this.modelAddBlogPost){
+              this.modelAddBlogPost.featuredImageUrl=responce.url;
+              this.modelAddBlogPost.urlHandel=responce.fileName;
+              this.closeImageSelector();
+            }
+          }
+        })
+
+
 
       }
     });
@@ -122,6 +138,7 @@ export class EditBlogpostComponent {
     this.BlogPostUpdateSubscription?.unsubscribe();
     this.BlogPostDeleteSubscription?.unsubscribe();
     this.modeladdBlogSubscription?.unsubscribe();
+    this.ImageSelectSubscription?.unsubscribe();
   }
 
 

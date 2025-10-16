@@ -46,16 +46,17 @@
                     <label for="featuredImageUrl" class="form-label">Featured Image URL
                         <button type="button" class="btn btn-light" (click)="openImageSelector()">Select Image</button>
                     </label>
-                    <input type="text" id="featuredImageUrl" class="form-control" name="featuredImageUrl"
-                        [(ngModel)]="modelAddBlogPost.featuredImageUrl" />
-                    <div *ngIf="modelAddBlogPost.featuredImageUrl">
+                     <div *ngIf="modelAddBlogPost.featuredImageUrl">
                         <img [src]="modelAddBlogPost.featuredImageUrl" alt="Featured" class="img-fluid mt-2" />
                     </div>
+                    <input type="text" id="featuredImageUrl" class="form-control" name="featuredImageUrl"
+                        [(ngModel)]="modelAddBlogPost.featuredImageUrl" />
+                   
                 </div>
 
                 <!-- URL Handle -->
                 <div class="mt-3">
-                    <label for="urlHandel" class="form-label">URL Handle</label>
+                    <label for="urlHandel" class="form-label">Image name</label>
                     <input type="text" id="urlHandel" class="form-control" name="urlHandel"
                         [(ngModel)]="modelAddBlogPost.urlHandel" />
                 </div>

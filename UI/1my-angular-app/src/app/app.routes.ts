@@ -7,6 +7,8 @@ import { EditCategoryComponent } from './Features/Category/edit-category/edit-ca
 import { BlogpostListComponent } from './Features/Blog-post/blogpost-list/blogpost-list.component';
 import {AddBlogpostComponent } from './Features/Blog-post/add-blogpost/add-blogpost.component';
 import {EditBlogpostComponent} from './Features/Blog-post/edit-blogpost/edit-blogpost.component'
+import { HomeComponent } from './home/home.component';
+import { BlogDetailsComponent } from './Features/Public/blog-details/blog-details.component';
 
 export const routes: Routes = [
  { path: 'home', loadComponent: () => import('./home/home.component').then(m => m.HomeComponent) },
@@ -17,4 +19,8 @@ export const routes: Routes = [
    { path: 'admin/blogpost', component: BlogpostListComponent},
    { path: 'admin/blogposts/add', component: AddBlogpostComponent},
    { path: 'admin/blogposts/edit/:id', component: EditBlogpostComponent},
+   { path: 'blog/:url', component:BlogDetailsComponent}, 
+   // ** always should be in end
+   { path: '**', component:HomeComponent},
+   
 ];

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';
 import { ImagePostModel } from '../../../Features/Blog-post/Model/image-post.model';
 
@@ -9,6 +9,16 @@ import { ImagePostModel } from '../../../Features/Blog-post/Model/image-post.mod
 })
 export class ImageService {
   private http=inject(HttpClient);
+
+  //to pass the value from one componenet to another by using service
+  selectedImage:BehaviorSubject<ImagePostModel>=new BehaviorSubject<ImagePostModel>({
+    id:0,
+    fileExtention:'',
+    fileName:'',
+    title:'',
+    url:'',
+    dateCreated:new Date()
+  });
 
   uploadFile(file:File,fileName:string,title:string):Observable<ImagePostModel>
   {
@@ -24,4 +34,16 @@ export class ImageService {
   {
     return this.http.get<ImagePostModel[]>(`${environment.apiBaseUrl}/Image`);
   }
+
+
+  selectImage(image:ImagePostModel):void
+  {
+    this.selectedImage.next(image);
+  }
+
+  //Now Add or Edit component will use this
+  onSelectImage():Observable<ImagePostModel>{
+    return this.selectedImage.asObservable()
+  }
+
 }

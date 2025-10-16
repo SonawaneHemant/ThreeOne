@@ -18,6 +18,8 @@ export class ImageSelectorComponent implements OnInit {
   private file?:File;
   fileName:string='';
   title:string='';
+  //this is also observable bcoz its holding the responce of observable
+  //when we subscribe it we can use the async pipe No need to unsubscribe 
   images$?:Observable<ImagePostModel[]>;
 
   @ViewChild('form',{static:false}) imageUploadForm?:NgForm;
@@ -49,6 +51,11 @@ export class ImageSelectorComponent implements OnInit {
     //     console.log(response);
     //   }
     // });
+  }
+
+  selectImages(image:ImagePostModel):void
+  {
+    this.imageService.selectImage(image);
   }
 
  
