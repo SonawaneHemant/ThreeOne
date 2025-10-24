@@ -9,6 +9,7 @@ import {AddBlogpostComponent } from './Features/Blog-post/add-blogpost/add-blogp
 import {EditBlogpostComponent} from './Features/Blog-post/edit-blogpost/edit-blogpost.component'
 import { HomeComponent } from './home/home.component';
 import { BlogDetailsComponent } from './Features/Public/blog-details/blog-details.component';
+import { LoginComponent } from './Features/Auth/login/login.component';
 
 export const routes: Routes = [
  { path: 'home', loadComponent: () => import('./home/home.component').then(m => m.HomeComponent) },
@@ -20,6 +21,7 @@ export const routes: Routes = [
    { path: 'admin/blogposts/add', component: AddBlogpostComponent},
    { path: 'admin/blogposts/edit/:id', component: EditBlogpostComponent},
    { path: 'blog/:url', component:BlogDetailsComponent}, 
+   { path: 'login', component:LoginComponent}, 
    // ** always should be in end
    { path: '**', component:HomeComponent},
    
