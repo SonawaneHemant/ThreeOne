@@ -27,6 +27,9 @@ export class LoginComponent {
         undefined,'/',undefined,true,'Strict'
         );
 
+        //set user info in auth service
+        this.authService.setUser({email:response.email,roles:response.roles});
+
         this.router.navigateByUrl('/');
       },
       error:(error)=>{

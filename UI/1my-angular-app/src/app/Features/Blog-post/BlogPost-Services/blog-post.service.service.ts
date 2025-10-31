@@ -18,7 +18,7 @@ export class BlogPostServiceService {
   }
 
   addblogpost(model: AddBlogPostModel): Observable<BlogPostModel> {
-    return this.http.post<BlogPostModel>(`${environment.apiBaseUrl}/GenericBlogPost`, model);
+    return this.http.post<BlogPostModel>(`${environment.apiBaseUrl}/GenericBlogPost?addAuth=true`, model);
   }
 
 
@@ -39,11 +39,11 @@ export class BlogPostServiceService {
 
   Updateblogpost(id: number, model: AddBlogPostModel): Observable<void> {
     // also use like this return this.http.get<GetCategoryResponceModel>(`${environment.apiBaseUrl}/GenericCategory/${id}`);
-    return this.http.put<void>(`${environment.apiBaseUrl}/GenericBlogPost` + `/${id}`, model);
+    return this.http.put<void>(`${environment.apiBaseUrl}/GenericBlogPost?addAuth=true` + `/${id}`, model);
   }
 
   Deleteblogpost(id: number): Observable<void> {
     // also use like this return this.http.get<GetCategoryResponceModel>(`${environment.apiBaseUrl}/GenericCategory/${id}`);
-    return this.http.delete<void>(`${environment.apiBaseUrl}/GenericBlogPost` + `/${id}`);
+    return this.http.delete<void>(`${environment.apiBaseUrl}/GenericBlogPost?addAuth=true` + `/${id}`);
   }
 }
