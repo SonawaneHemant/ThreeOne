@@ -4,12 +4,13 @@ import { CategoryService } from '../../Services/category.service';
 import { GetCategoryResponceModel } from '../Models/get-category-responce.model';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-category-list',
   standalone: true,
-  imports: [ CommonModule,RouterLink,RouterOutlet,RouterLinkActive],
+  imports: [ CommonModule,RouterLink,RouterOutlet,RouterLinkActive,FormsModule],
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.css'
 })
@@ -17,6 +18,9 @@ export class CategoryListComponent implements OnInit{
 
    //getCategoryList?:GetCategoryResponceModel[];
    getCategoryList$?:Observable<GetCategoryResponceModel[]>;
+    searchTerm?:string = undefined;
+    sortDirection?:string = undefined;
+    sortBy?:string = 'Name';
 
   constructor(private categoryService:CategoryService){
   }
@@ -38,6 +42,19 @@ export class CategoryListComponent implements OnInit{
     //     console.log(err);
     //   }
     // })
+  }
+
+  SearchCategory(sortDirection?:string){
+    if(this.searchTerm?.trim() === '' && !sortDirection){
+      //if search term is empty, fetch all categories
+      this.getCategoryList$ = this.categoryService.getAllCategory();
+    } else if(sortDirection) {
+      //fetch categories based on search term
+      this.getCategoryList$ = this.categoryService.getAllCategory(this.searchTerm, this.sortBy, this.sortDirection);
+    }
+    else {
+      this.getCategoryList$ = this.categoryService.getAllCategory();
+    }
   }
 
 }

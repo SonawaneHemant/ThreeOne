@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AddCategoryRequestModel } from '../Category/Models/add-category-request.model';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { GetCategoryResponceModel } from '../Category/Models/get-category-responce.model';
 import { environment } from '../../../environments/environment';
 import { CookieService } from 'ngx-cookie-service';
@@ -19,9 +19,18 @@ export class CategoryService {
     return this.http.post<void>(`${environment.apiBaseUrl}/GenericCategory?addAuth=true`,model);
   }
 
-  getAllCategory():Observable<GetCategoryResponceModel[]>{
-
-    return this.http.get<GetCategoryResponceModel[]>(`${environment.apiBaseUrl}/GenericCategory`);
+  getAllCategory(query?:string,sortBy?:string,sortDirection?:string):Observable<GetCategoryResponceModel[]>{
+    let params=new HttpParams();
+    if(query){
+      params=params.set('query',query);
+    }
+    if(sortBy){
+      params=params.set('sortBy',sortBy);
+    }
+    if(sortDirection){
+      params=params.set('sortDirection',sortDirection);
+    }
+    return this.http.get<GetCategoryResponceModel[]>(`${environment.apiBaseUrl}/GenericCategory`,{params:params });
   }
 
   getCategoryById(id:number):Observable<GetCategoryResponceModel>{
