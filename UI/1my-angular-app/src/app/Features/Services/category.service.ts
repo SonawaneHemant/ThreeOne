@@ -19,7 +19,7 @@ export class CategoryService {
     return this.http.post<void>(`${environment.apiBaseUrl}/GenericCategory?addAuth=true`,model);
   }
 
-  getAllCategory(query?:string,sortBy?:string,sortDirection?:string):Observable<GetCategoryResponceModel[]>{
+  getAllCategory(query?:string,sortBy?:string,sortDirection?:string,pageNumber?:number,pageSize?:number):Observable<GetCategoryResponceModel[]>{
     let params=new HttpParams();
     if(query){
       params=params.set('query',query);
@@ -30,12 +30,23 @@ export class CategoryService {
     if(sortDirection){
       params=params.set('sortDirection',sortDirection);
     }
+    if(pageNumber){
+      params=params.set('pageNumber',pageNumber);
+    }
+    if(pageSize){
+      params=params.set('pageSize',pageSize);
+    }
     return this.http.get<GetCategoryResponceModel[]>(`${environment.apiBaseUrl}/GenericCategory`,{params:params });
   }
 
   getCategoryById(id:number):Observable<GetCategoryResponceModel>{
     // also use like this return this.http.get<GetCategoryResponceModel>(`${environment.apiBaseUrl}/GenericCategory/${id}`);
     return this.http.get<GetCategoryResponceModel>(`${environment.apiBaseUrl}/GenericCategory` + `/${id}`);
+  }
+
+   getCategoryTotalCount():Observable<number>{
+    // also use like this return this.http.get<GetCategoryResponceModel>(`${environment.apiBaseUrl}/GenericCategory/${id}`);
+    return this.http.get<number>(`${environment.apiBaseUrl}/GenericCategory/count`);
   }
 
  UpdateCategory(id:number,model:AddCategoryRequestModel):Observable<void>{
